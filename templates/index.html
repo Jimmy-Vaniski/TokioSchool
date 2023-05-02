@@ -3,19 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>App Gestor de Tarefas</title>
-    <!-- estilos do bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-
-    <!-- fonte do google -->
 
 
-    <!-- folha de estilo do css -->
+    <!-- bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sketchy/bootstrap.min.css">
+
+    <!-- font do Google gostei mais dessa do que da outra. -->
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+
+    <!-- vincula estilo ao html -->
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+
 </head>
 <body>
-    <main>
-        <h1>Estou em index</h1>
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <main class="container p-4">
+        <h1 class="display-4 text-center mt-4 titulo">To Do L ist</h1>
     </main>
+
+<!-- Criandos divs no centro css vem do bootstrap -->
+<div class="row">
+    <div class="col-md-4 offset-md-4 my-auto">
+        <div class="card">
+            <div class="card-header">
+                <form action="">
+                    <div class="form-group"><!-- criando o formulario separado do resto -->
+                        <input type="text" name="conteúdo_tarefa"placeholder="O que pretendes fazer?" class="form-control"
+                        autofocus>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block"> <!-- determina local e que ocupe a largura total -->
+                            Adicionar à lista de tarefas
+                    </button>
+                    </form>
+                </div>
+            <div class="card-body">
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
