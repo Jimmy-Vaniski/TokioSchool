@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -22,14 +22,33 @@ with app.app_context():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    mostrar_tarefas = Tarefa.query.all()
+    return render_template('index.html', to_do=mostrar_tarefas)
 
 @app.route('/criar-tarefa', methods=['POST'])
 def criar():
     tarefa = Tarefa(conteudo=request.form['conteúdo_tarefa'], feita=False)
     db.session.add(tarefa)
     db.session.commit()
-    return "Tarefa guardada"
+    return redirect(url_for('home'))
+
+
+# rota para apagar a tarefa
+@app.route('/eliminar-tarefa/<id>')
+def eliminar(id):
+    tarefa = Tarefa.query.filter_by(id=int(id)).delete()
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
+# criando rota para alterar o boleano de tarefa
+@app.route('/tarefa-feita/<id>')
+def feita(id):
+    tarefa = Tarefa.query.filter_by(id=int(id)).first()  # Encontra a tarefa filtrando pelo id
+    tarefa.feita = not (tarefa.feita)  # grava a alteração no boleano de 0 pra 1 e de 1 pra 0
+    db.session.commit()  # executa a ação
+    return redirect(url_for('home'))  # volta para a home
+
 
 if __name__ == '__main__':
     app.run(debug=True)
